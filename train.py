@@ -88,9 +88,14 @@ def main(args):
         # Logging.
         logging.info('epoch %d', epoch)
 
+
         # Training.
         train_nelbo, global_step = train(train_queue, model, cnn_optimizer, grad_scalar, global_step, warmup_iters, writer, logging)
         logging.info('train_nelbo %f', train_nelbo)
+        
+        print("here")
+        print(args.epochs)
+
         writer.add_scalar('train/nelbo', train_nelbo, global_step)
 
         model.eval()
@@ -296,7 +301,7 @@ if __name__ == '__main__':
     # data
     parser.add_argument('--dataset', type=str, default='mnist',
                         choices=['cifar10', 'mnist', 'celeba_64', 'celeba_256',
-                                 'imagenet_32', 'ffhq', 'lsun_bedroom_128'],
+                                 'imagenet_32', 'ffhq', 'lsun_bedroom_128', 'clam'],
                         help='which dataset to use')
     parser.add_argument('--data', type=str, default='/tmp/nasvae/data',
                         help='location of the data corpus')
@@ -387,6 +392,12 @@ if __name__ == '__main__':
                         help='address for master')
     parser.add_argument('--seed', type=int, default=1,
                         help='seed used for initialization')
+    parser.add_argument('--slide_paths', type=str,
+                        help='path to raw slides')
+    parser.add_argument('--patch_path', type=str,
+                        help='path to patches')
+    parser.add_argument('--dataloader_threads', type=int, default=8,
+                        help='number of threads to use for dataloading')
     args = parser.parse_args()
     args.save = args.root + '/eval-' + args.save
     utils.create_exp_dir(args.save)

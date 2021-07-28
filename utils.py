@@ -303,6 +303,8 @@ def num_output(dataset):
         return 3 * size * size
     elif dataset == 'ffhq':
         return 3 * 256 * 256
+    elif dataset == 'clam':
+        return 3*256*256
     else:
         raise NotImplementedError
 
@@ -316,6 +318,8 @@ def get_input_size(dataset):
         size = int(dataset.split('_')[-1])
         return size
     elif dataset == 'ffhq':
+        return 256
+    elif dataset == 'clam':
         return 256
     else:
         raise NotImplementedError
